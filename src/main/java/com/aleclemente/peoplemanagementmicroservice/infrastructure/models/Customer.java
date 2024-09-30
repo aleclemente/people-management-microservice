@@ -23,11 +23,16 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long id, String name, String cpf, LocalDate dateOfBirth) {
+    public Customer(Long id, String name, String cpf, LocalDate dateOfBirth, String zipCode, String street, String neighborhood, String city, String state) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.dateOfBirth = dateOfBirth;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
     }
 
     public Long getId() {

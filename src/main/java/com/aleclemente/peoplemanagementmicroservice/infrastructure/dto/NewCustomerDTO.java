@@ -4,10 +4,10 @@ public record NewCustomerDTO(
         String name,
         String cpf,
         String dateOfBirth,
+        String zipCode,
         String street,
         String neighborhood,
         String city,
-        String state,
-        String zipCode
+        String state
 ) {
 }

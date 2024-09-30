@@ -15,11 +15,14 @@ import java.util.Objects;
 public class CustomerController {
 
     private final CreateCustomerUseCase createCustomerUseCase;
+    private final GetCustomerByIdUseCase getCustomerByIdUseCase;
 
     public CustomerController(
-            final CreateCustomerUseCase createCustomerUseCase
+            final CreateCustomerUseCase createCustomerUseCase,
+            final GetCustomerByIdUseCase getCustomerByIdUseCase
     ) {
         this.createCustomerUseCase = Objects.requireNonNull(createCustomerUseCase);
+        this.getCustomerByIdUseCase = Objects.requireNonNull(getCustomerByIdUseCase);
     }
 
     @PostMapping
@@ -30,5 +33,12 @@ public class CustomerController {
         }catch (ValidationException ex){
             return ResponseEntity.unprocessableEntity().body(ex.getMessage());
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        return getCustomerByIdUseCase.execute(new GetCustomerByIdUseCase.Input(id))
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 }
