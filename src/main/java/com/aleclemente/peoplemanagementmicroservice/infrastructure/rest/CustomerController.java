@@ -4,13 +4,16 @@ import com.aleclemente.peoplemanagementmicroservice.application.exception.Valida
 import com.aleclemente.peoplemanagementmicroservice.application.usecases.CreateCustomerUseCase;
 import com.aleclemente.peoplemanagementmicroservice.application.usecases.GetCustomerByIdUseCase;
 import com.aleclemente.peoplemanagementmicroservice.infrastructure.dto.NewCustomerDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Objects;
 
 @RestController
+@Validated
 @RequestMapping(value = "customers")
 public class CustomerController {
 
@@ -26,7 +29,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody NewCustomerDTO dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody NewCustomerDTO dto) {
         try{
             final var output = createCustomerUseCase.execute(new CreateCustomerUseCase.Input(dto.name(), dto.cpf(),dto.dateOfBirth(), dto.zipCode(), dto.street(), dto.neighborhood(), dto.city(), dto.state()));
             return ResponseEntity.created(URI.create("/customers/" + output.id())).body(output);

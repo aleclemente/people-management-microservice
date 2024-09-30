@@ -20,7 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
-class CustomerControllerTest {
+public class CustomerControllerTest {
+
     @Autowired
     private MockMvc mvc;
 

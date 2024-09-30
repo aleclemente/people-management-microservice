@@ -1,6 +1,8 @@
 package com.aleclemente.peoplemanagementmicroservice.infrastructure.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,6 +14,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Pattern(regexp = "\\d+", message = "Must be a number")
     private String cpf;
     private LocalDate dateOfBirth;
     private String zipCode;
