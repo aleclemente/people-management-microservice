@@ -82,6 +82,29 @@ class CreateCustomerUseCaseTestIT extends IntegrationTest {
         Assertions.assertEquals(expectedError, actualException.getMessage());
     }
 
+    @Test
+    @DisplayName("Não deve cadastrar um cliente menor de idade")
+    public void testCreateUnderAgeCustomerShouldFail() {
+        //given
+        final var expectedName = "Usuário 1";
+        final var expectedCPF = "12345678901";
+        final var expectedDateOfBirth = "2020-01-01";
+        final var expectedZipCode = "12345678";
+        final var expectedStreet = "Street";
+        final var expectedNeighborhood = "neighborhood";
+        final var expectedCity = "city";
+        final var expectedState = "state";
+        final var expectedError = "dateOfBirth must be equal or greater than 18 years old!";
+
+        final var createInput = new CreateCustomerUseCase.Input(expectedName, expectedCPF, expectedDateOfBirth, expectedZipCode, expectedStreet, expectedNeighborhood, expectedCity, expectedState);
+
+        //when
+        final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
+
+        //then
+        Assertions.assertEquals(expectedError, actualException.getMessage());
+    }
+
     private Customer createCustomer(final String name, final String cpf, final String dateOfBirth, final String zipCode, final String street, final String neighborhood, final String city, final String state){
         final var aCustomer = new Customer();
         aCustomer.setName(name);

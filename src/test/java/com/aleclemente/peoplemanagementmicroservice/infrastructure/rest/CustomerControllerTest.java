@@ -40,7 +40,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    @DisplayName("Deve criar um cliente")
+    @DisplayName("Deve cadastrar um cliente")
     public void testCreate() throws Exception {
 
         var customer = new NewCustomerDTO(
@@ -75,7 +75,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    @DisplayName("Não deve cadastrar um cliente com CPF duplicado")
+    @DisplayName("NÃO deve cadastrar um cliente com CPF duplicado")
     public void testCreateWithDuplicatedCPFShouldFail() throws Exception {
 
         var customer = new NewCustomerDTO(
