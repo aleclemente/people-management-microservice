@@ -1,6 +1,8 @@
 package com.aleclemente.peoplemanagementmicroservice.infrastructure.rest;
 
+import com.aleclemente.peoplemanagementmicroservice.PeopleManagementMicroserviceApplication;
 import com.aleclemente.peoplemanagementmicroservice.application.usecases.CreateCustomerUseCase;
+import com.aleclemente.peoplemanagementmicroservice.infrastructure.configurations.UseCaseConfig;
 import com.aleclemente.peoplemanagementmicroservice.infrastructure.dto.NewCustomerDTO;
 import com.aleclemente.peoplemanagementmicroservice.infrastructure.repositories.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -40,7 +43,15 @@ public class CustomerControllerTest {
     @DisplayName("Deve criar um cliente")
     public void testCreate() throws Exception {
 
-        var customer = new NewCustomerDTO("Alexandre", "12345678901", "01/01/2001", "Street", "neighborhood", "city", "state", "12345678");
+        var customer = new NewCustomerDTO(
+                "Usuário 1",
+                "12345678901",
+                "2001-01-01",
+                "12345678",
+                "Street",
+                "neighborhood",
+                "city",
+                "state");
 
         final var result = this.mvc.perform(
                         MockMvcRequestBuilders.post("/customers")
@@ -67,7 +78,15 @@ public class CustomerControllerTest {
     @DisplayName("Não deve cadastrar um cliente com CPF duplicado")
     public void testCreateWithDuplicatedCPFShouldFail() throws Exception {
 
-        var customer = new NewCustomerDTO("Usuário 1", "12345678901", "01/01/2001", "12345678", "street", "neighborhood", "city", "state");
+        var customer = new NewCustomerDTO(
+                "Usuário 1",
+                "12345678901",
+                "2001-01-01",
+                "12345678",
+                "street",
+                "neighborhood",
+                "city",
+                "state");
 
         // Cria o primeiro cliente
         this.mvc.perform(
@@ -95,7 +114,15 @@ public class CustomerControllerTest {
     @DisplayName("Deve obter um cliente por id")
     public void testGet() throws Exception {
 
-        var customer = new NewCustomerDTO("Usuário 1", "12345678901", "01/01/2001", "12345678", "street", "neighborhood", "city", "state");
+        var customer = new NewCustomerDTO(
+                "Usuário 1",
+                "12345678901",
+                "2001-01-01",
+                "12345678",
+                "street",
+                "neighborhood",
+                "city",
+                "state");
 
         final var createResult = this.mvc.perform(
                         MockMvcRequestBuilders.post("/customers")
@@ -113,6 +140,7 @@ public class CustomerControllerTest {
                 .andReturn().getResponse().getContentAsByteArray();
 
         var actualResponse = mapper.readValue(result, CreateCustomerUseCase.Output.class);
+
         Assertions.assertEquals(customerId, actualResponse.id());
         Assertions.assertEquals(customer.name(), actualResponse.name());
         Assertions.assertEquals(customer.cpf(), actualResponse.cpf());

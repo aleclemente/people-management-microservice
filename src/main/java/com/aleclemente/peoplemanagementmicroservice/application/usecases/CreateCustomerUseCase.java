@@ -40,5 +40,6 @@ public class CreateCustomerUseCase
     }
 
     public record Input(String name, String cpf, String dateOfBirth, String zipCode, String street, String neighborhood, String city, String state){}
+
     public record Output(Long id, String name, String cpf, LocalDate dateOfBirth, String zipCode, String street, String neighborhood, String city, String state){}
 }
