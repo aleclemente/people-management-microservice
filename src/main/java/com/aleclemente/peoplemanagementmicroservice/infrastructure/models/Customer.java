@@ -1,6 +1,8 @@
 package com.aleclemente.peoplemanagementmicroservice.infrastructure.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
@@ -12,11 +14,17 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "name cannot be null or empty")
     private String name;
 
     @Pattern(regexp = "\\d+", message = "Must be only numbers")
+    @NotEmpty(message = "cpf cannot be null or empty")
     private String cpf;
+
+    @NotNull(message = "dateOfBirth cannot be null or empty")
     private LocalDate dateOfBirth;
+
     private String zipCode;
     private String street;
     private String neighborhood;
