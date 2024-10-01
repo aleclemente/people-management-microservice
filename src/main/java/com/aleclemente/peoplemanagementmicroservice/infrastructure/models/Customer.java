@@ -1,6 +1,7 @@
 package com.aleclemente.peoplemanagementmicroservice.infrastructure.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,6 +13,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Pattern(regexp = "\\d+", message = "Must be only numbers")
     private String cpf;
     private LocalDate dateOfBirth;
     private String zipCode;
@@ -23,11 +26,16 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long id, String name, String cpf, LocalDate dateOfBirth) {
+    public Customer(Long id, String name, String cpf, LocalDate dateOfBirth, String zipCode, String street, String neighborhood, String city, String state) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.dateOfBirth = dateOfBirth;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
     }
 
     public Long getId() {
