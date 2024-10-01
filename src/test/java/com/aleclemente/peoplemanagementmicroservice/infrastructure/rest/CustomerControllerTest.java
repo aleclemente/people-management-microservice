@@ -1,8 +1,6 @@
 package com.aleclemente.peoplemanagementmicroservice.infrastructure.rest;
 
-import com.aleclemente.peoplemanagementmicroservice.PeopleManagementMicroserviceApplication;
 import com.aleclemente.peoplemanagementmicroservice.application.usecases.CreateCustomerUseCase;
-import com.aleclemente.peoplemanagementmicroservice.infrastructure.configurations.UseCaseConfig;
 import com.aleclemente.peoplemanagementmicroservice.infrastructure.dto.NewCustomerDTO;
 import com.aleclemente.peoplemanagementmicroservice.infrastructure.repositories.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,10 +13,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
@@ -144,7 +144,7 @@ public class CustomerControllerTest {
         Assertions.assertEquals(customerId, actualResponse.id());
         Assertions.assertEquals(customer.name(), actualResponse.name());
         Assertions.assertEquals(customer.cpf(), actualResponse.cpf());
-        Assertions.assertEquals(customer.dateOfBirth(), actualResponse.dateOfBirth());
+        Assertions.assertEquals(LocalDate.parse(customer.dateOfBirth(), DateTimeFormatter.ISO_DATE), actualResponse.dateOfBirth());
         Assertions.assertEquals(customer.zipCode(), actualResponse.zipCode());
         Assertions.assertEquals(customer.street(), actualResponse.street());
         Assertions.assertEquals(customer.neighborhood(), actualResponse.neighborhood());
